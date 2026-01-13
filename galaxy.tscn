@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://c8abl8sc7neu"]
+
+[ext_resource type="Script" uid="uid://lqldomo8axcm" path="res://galaxy.gd" id="1_i8bsd"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i8bsd"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+
+[sub_resource type="PointMesh" id="PointMesh_h2yge"]
+material = SubResource("StandardMaterial3D_i8bsd")
+
+[sub_resource type="MultiMesh" id="MultiMesh_mlh1b"]
+transform_format = 1
+use_colors = true
+mesh = SubResource("PointMesh_h2yge")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3van1"]
+vertex_color_use_as_albedo = true
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 1.0
+
+[sub_resource type="PointMesh" id="PointMesh_mlh1b"]
+material = SubResource("StandardMaterial3D_3van1")
+
+[sub_resource type="MultiMesh" id="MultiMesh_obluv"]
+transform_format = 1
+use_colors = true
+mesh = SubResource("PointMesh_mlh1b")
+
+[node name="Galaxy" type="Node3D" unique_id=4850069 node_paths=PackedStringArray("star_points", "nearby_stars")]
+script = ExtResource("1_i8bsd")
+star_points = NodePath("Meshes/StarPoints")
+nearby_stars = NodePath("Meshes/NearbyStars")
+
+[node name="Meshes" type="Node3D" parent="." unique_id=835749756]
+
+[node name="StarPoints" type="MultiMeshInstance3D" parent="Meshes" unique_id=2132062448]
+multimesh = SubResource("MultiMesh_mlh1b")
+
+[node name="NearbyStars" type="MultiMeshInstance3D" parent="Meshes" unique_id=1112658459]
+multimesh = SubResource("MultiMesh_obluv")

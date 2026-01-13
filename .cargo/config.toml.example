@@ -1,0 +1,18 @@
+# Copy this file to config.toml and adjust paths for your system
+# This file is gitignored because it contains machine-specific paths
+
+# Use system git CLI for fetching (required for SSH key authentication with private repos)
+[net]
+git-fetch-with-cli = true
+
+# Android NDK linker (required for Android builds)
+# Update the path to match your NDK installation
+[target.aarch64-linux-android]
+linker = "/path/to/Android/Sdk/ndk/VERSION/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android21-clang"
+
+# Example for macOS:
+# linker = "/Users/YOU/Library/Android/sdk/ndk/VERSION/toolchains/llvm/prebuilt/darwin-x86_64/bin/aarch64-linux-android21-clang"
+
+# Windows cross-compile (optional, if you have mingw installed)
+# [target.x86_64-pc-windows-gnu]
+# linker = "x86_64-w64-mingw32-gcc"

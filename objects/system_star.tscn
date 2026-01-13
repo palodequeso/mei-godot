@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://bjs3wtbtvt7s7"]
+
+[ext_resource type="Script" uid="uid://dlhf7bpgpv2b" path="res://objects/system_star.gd" id="1_script"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_1"]
+radial_segments = 32
+rings = 16
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1"]
+albedo_color = Color(1, 0.9, 0.7, 1)
+emission_enabled = true
+emission = Color(1, 0.8, 0.5, 1)
+emission_energy_multiplier = 2.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_xncex"]
+
+[node name="SystemStar" type="Node3D" unique_id=1280793658]
+script = ExtResource("1_script")
+
+[node name="Mesh" type="MeshInstance3D" parent="." unique_id=1805060216]
+mesh = SubResource("SphereMesh_1")
+surface_material_override/0 = SubResource("StandardMaterial3D_1")
+
+[node name="CollisionBody" type="StaticBody3D" parent="." unique_id=530088926]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape" type="CollisionShape3D" parent="CollisionBody" unique_id=1930060181]
+shape = SubResource("SphereShape3D_xncex")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=2102754881]
+omni_range = 4096.0
+omni_attenuation = 0.15

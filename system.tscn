@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://tqnqjfo0j54e"]
+
+[ext_resource type="Script" uid="uid://dmn62t3rw5iww" path="res://system.gd" id="1_i1ka3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_distant"]
+albedo_color = Color(1, 1, 1, 1)
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_distant"]
+material = SubResource("StandardMaterial3D_distant")
+radius = 1.0
+height = 2.0
+radial_segments = 8
+rings = 4
+
+[sub_resource type="MultiMesh" id="MultiMesh_distant"]
+transform_format = 1
+use_colors = true
+mesh = SubResource("SphereMesh_distant")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_asteroid"]
+albedo_color = Color(0.5, 0.45, 0.4, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_asteroid"]
+material = SubResource("StandardMaterial3D_asteroid")
+radius = 1.0
+height = 2.0
+
+[sub_resource type="MultiMesh" id="MultiMesh_asteroid"]
+transform_format = 1
+use_colors = true
+mesh = SubResource("SphereMesh_asteroid")
+
+[node name="System" type="Node3D" unique_id=2053882772 node_paths=PackedStringArray("distant_stars", "asteroid_belt_viz", "orbit_lines_container", "stars_container", "planets_container", "moons_container")]
+script = ExtResource("1_i1ka3")
+distant_stars = NodePath("RenderNodes/DistantStars")
+asteroid_belt_viz = NodePath("RenderNodes/Asteroids")
+orbit_lines_container = NodePath("RenderNodes/OrbitLines")
+stars_container = NodePath("Objects/Stars")
+planets_container = NodePath("Objects/Planets")
+moons_container = NodePath("Objects/Moons")
+
+[node name="RenderNodes" type="Node3D" parent="." unique_id=1961430204]
+
+[node name="DistantStars" type="MultiMeshInstance3D" parent="RenderNodes"]
+multimesh = SubResource("MultiMesh_distant")
+
+[node name="Asteroids" type="MultiMeshInstance3D" parent="RenderNodes"]
+multimesh = SubResource("MultiMesh_asteroid")
+
+[node name="OrbitLines" type="Node3D" parent="RenderNodes"]
+
+[node name="Objects" type="Node3D" parent="."]
+
+[node name="Stars" type="Node3D" parent="Objects"]
+
+[node name="Planets" type="Node3D" parent="Objects"]
+
+[node name="Moons" type="Node3D" parent="Objects"]

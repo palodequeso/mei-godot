@@ -1,0 +1,26 @@
+# Generator Configuration
+# These parameters control galaxy generation and star queries
+
+# Cell size for spatial quantization (light-years)
+# Fundamental to generation - changing this affects all star positions
+cell_size = 0.25
+
+# Star probability scale factor - controls overall star density
+# Higher = more stars, lower = fewer stars
+star_probability_scale = 0.002
+
+# Block size for galactic structure sampling (light-years)
+# Larger blocks = faster but coarser sampling
+structure_block_size = 100.0
+
+# Number of samples per block for structure sampling
+# More samples = denser coverage but slower
+structure_samples_per_block = 1
+
+# Maximum radius for nearby star queries (light-years)
+# Queries beyond this radius will be clamped
+nearby_max_radius = 32.0
+
+# Large prime for scrambling iteration order
+# Ensures even spatial distribution when hitting max_stars limits
+scramble_stride = 2654435761

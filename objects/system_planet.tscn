@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://d2nvqajka6a7v"]
+
+[ext_resource type="Script" uid="uid://bxof43s7wyf5d" path="res://objects/system_planet.gd" id="1_script"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_1"]
+radial_segments = 24
+rings = 12
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1"]
+albedo_color = Color(0.5, 0.6, 0.8, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_asi5p"]
+
+[node name="SystemPlanet" type="Node3D" unique_id=588583005]
+script = ExtResource("1_script")
+
+[node name="Mesh" type="MeshInstance3D" parent="." unique_id=111091988]
+mesh = SubResource("SphereMesh_1")
+surface_material_override/0 = SubResource("StandardMaterial3D_1")
+
+[node name="CollisionBody" type="StaticBody3D" parent="." unique_id=1176638856]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape" type="CollisionShape3D" parent="CollisionBody" unique_id=1053731973]
+shape = SubResource("SphereShape3D_asi5p")

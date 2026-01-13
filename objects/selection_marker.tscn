@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://dk0qcf0bg2ubr"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_edge"]
+top_radius = 0.005
+bottom_radius = 0.005
+height = 1.0
+radial_segments = 4
+
+[sub_resource type="StandardMaterial3D" id="WireframeMat"]
+shading_mode = 0
+albedo_color = Color(0.4, 0.9, 1, 1)
+
+[node name="SelectionMarker" type="Node3D" unique_id=4613712]
+visible = false
+
+[node name="BottomFrontEdge" type="MeshInstance3D" parent="." unique_id=635249727]
+transform = Transform3D(-4.371139e-08, -1, 4.371139e-08, 0, -4.371139e-08, -1, 1, -4.371139e-08, 1.9106855e-15, 0, -0.5, -0.5)
+mesh = SubResource("CylinderMesh_edge")
+surface_material_override/0 = SubResource("WireframeMat")
+
+[node name="BottomRightEdge" type="MeshInstance3D" parent="." unique_id=1715398878]
+transform = Transform3D(1.9106855e-15, -4.3711385e-08, 0.99999994, -1, -4.3711385e-08, 0, 4.371139e-08, -0.99999994, -4.3711385e-08, 0.5, 0.5, 0)
+mesh = SubResource("CylinderMesh_edge")
+surface_material_override/0 = SubResource("WireframeMat")
+
+[node name="BottomBackEdge" type="MeshInstance3D" parent="." unique_id=182562466]
+transform = Transform3D(-4.371139e-08, -1, 4.371139e-08, 0, -4.371139e-08, -1, 1, -4.371139e-08, 1.9106855e-15, 0, -0.5, 0.5)
+mesh = SubResource("CylinderMesh_edge")
+surface_material_override/0 = SubResource("WireframeMat")
+
+[node name="BottomLeftEdge" type="MeshInstance3D" parent="." unique_id=328700987]
+transform = Transform3D(1.9106855e-15, -4.371139e-08, 1, -1, -4.371139e-08, 0, 4.371139e-08, -1, -4.371139e-08, -0.5, 0.5, 0)
+mesh = SubResource("CylinderMesh_edge")
+surface_material_override/0 = SubResource("WireframeMat")
+
+[node name="TopFrontEdge" type="MeshInstance3D" parent="." unique_id=1839842671]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -0.5, -0.5, 0)
+mesh = SubResource("CylinderMesh_edge")
+surface_material_override/0 = SubResource("WireframeMat")
+
+[node name="TopRightEdge" type="MeshInstance3D" parent="." unique_id=1087892353]
+transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, 0, 0.5, 0.5)
+mesh = SubResource("CylinderMesh_edge")
+surface_material_override/0 = SubResource("WireframeMat")
+
+[node name="TopBackEdge" type="MeshInstance3D" parent="." unique_id=711672534]
+transform = Transform3D(1.9106855e-15, -4.371139e-08, -1, -1, -4.371139e-08, 0, -4.371139e-08, 1, -4.371139e-08, 0.5, -0.5, 0)
+mesh = SubResource("CylinderMesh_edge")
+surface_material_override/0 = SubResource("WireframeMat")
+
+[node name="TopLeftEdge" type="MeshInstance3D" parent="." unique_id=215372438]
+transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, 0, 0.5, -0.5)
+mesh = SubResource("CylinderMesh_edge")
+surface_material_override/0 = SubResource("WireframeMat")
+
+[node name="VerticalFrontLeft" type="MeshInstance3D" parent="." unique_id=814702688]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, -0.5)
+mesh = SubResource("CylinderMesh_edge")
+surface_material_override/0 = SubResource("WireframeMat")
+
+[node name="VerticalFrontRight" type="MeshInstance3D" parent="." unique_id=2032773372]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -0.5)
+mesh = SubResource("CylinderMesh_edge")
+surface_material_override/0 = SubResource("WireframeMat")
+
+[node name="VerticalBackRight" type="MeshInstance3D" parent="." unique_id=722458598]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
+mesh = SubResource("CylinderMesh_edge")
+surface_material_override/0 = SubResource("WireframeMat")
+
+[node name="VerticalBackLeft" type="MeshInstance3D" parent="." unique_id=1558493946]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0.5)
+mesh = SubResource("CylinderMesh_edge")
+surface_material_override/0 = SubResource("WireframeMat")

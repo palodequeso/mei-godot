@@ -1,0 +1,454 @@
+[gd_scene format=3 uid="uid://j8eofh07h1qj"]
+
+[ext_resource type="Script" uid="uid://dyvfckmgot73j" path="res://main.gd" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://tqnqjfo0j54e" path="res://system.tscn" id="2_h2yge"]
+[ext_resource type="PackedScene" uid="uid://c8abl8sc7neu" path="res://galaxy.tscn" id="3_1bvp3"]
+[ext_resource type="Theme" uid="uid://ctgip6y7tcrsf" path="res://scifi_theme.tres" id="4_scifi"]
+
+[sub_resource type="BoxMesh" id="ControllerMesh"]
+size = Vector3(0.05, 0.03, 0.12)
+
+[sub_resource type="StandardMaterial3D" id="ControllerMaterial"]
+albedo_color = Color(0.2, 0.2, 0.3, 1)
+metallic = 0.5
+roughness = 0.3
+
+[sub_resource type="CylinderMesh" id="LaserMesh"]
+top_radius = 0.002
+bottom_radius = 0.002
+height = 1000.0
+
+[sub_resource type="StandardMaterial3D" id="LaserMaterial"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0, 0.8, 1, 0.6)
+
+[sub_resource type="SphereMesh" id="LaserDotMesh"]
+radius = 0.01
+height = 0.02
+
+[sub_resource type="StandardMaterial3D" id="LaserDotMaterial"]
+shading_mode = 0
+albedo_color = Color(0, 1, 0.5, 1)
+
+[sub_resource type="Environment" id="Environment_lquwl"]
+background_energy_multiplier = 0.0
+ambient_light_energy = 0.0
+glow_enabled = true
+glow_bloom = 0.9
+
+[node name="Node3D" type="Node3D" unique_id=15936572 node_paths=PackedStringArray("galaxy_scene", "system_scene", "camera", "x_position", "y_position", "z_position", "fps_label", "star_info_label", "flight_mode_button", "view_mode_label", "fly_button", "seed_input", "velocity_slider", "velocity_label", "goto_button", "x_input", "y_input", "z_input", "nearest_stars_panel", "nearest_star_list", "system_objects_panel", "object_list", "selected_object_panel", "selected_object_info", "fly_to_object_button", "tooltip_label", "move_panel", "rotate_panel", "xr_origin", "xr_camera", "left_controller", "right_controller")]
+script = ExtResource("1_ig7tw")
+galaxy_scene = NodePath("Galaxy")
+system_scene = NodePath("System")
+camera = NodePath("Camera3D")
+x_position = NodePath("Camera3D/HUD/Panel/VBoxContainer/XPosition")
+y_position = NodePath("Camera3D/HUD/Panel/VBoxContainer/YPosition")
+z_position = NodePath("Camera3D/HUD/Panel/VBoxContainer/ZPosition")
+fps_label = NodePath("Camera3D/HUD/FPSLabel")
+star_info_label = NodePath("Camera3D/HUD/Panel2/VBoxContainer/ScrollContainer/StarInfo")
+flight_mode_button = NodePath("Camera3D/HUD/HBoxContainer2/CheckButton")
+view_mode_label = NodePath("Camera3D/HUD/ViewModeLabel")
+fly_button = NodePath("Camera3D/HUD/Panel2/Button")
+seed_input = NodePath("Camera3D/HUD/HBoxContainer/SeedInput")
+velocity_slider = NodePath("Camera3D/HUD/HBoxContainer2/HSlider")
+velocity_label = NodePath("Camera3D/HUD/HBoxContainer2/VelocityLabel")
+goto_button = NodePath("Camera3D/HUD/Panel/VBoxContainer/HBoxContainer/GotoButton")
+x_input = NodePath("Camera3D/HUD/Panel/VBoxContainer/XInput")
+y_input = NodePath("Camera3D/HUD/Panel/VBoxContainer/YInput")
+z_input = NodePath("Camera3D/HUD/Panel/VBoxContainer/ZInput")
+nearest_stars_panel = NodePath("Camera3D/HUD/NearestStarsPanel")
+nearest_star_list = NodePath("Camera3D/HUD/NearestStarsPanel/VBoxContainer/ScrollContainer/StarList")
+system_objects_panel = NodePath("Camera3D/HUD/SystemObjectsPanel")
+object_list = NodePath("Camera3D/HUD/SystemObjectsPanel/VBoxContainer/ObjectList")
+selected_object_panel = NodePath("Camera3D/HUD/SelectedObjectPanel")
+selected_object_info = NodePath("Camera3D/HUD/SelectedObjectPanel/SelectedObjectInfo")
+fly_to_object_button = NodePath("Camera3D/HUD/SelectedObjectPanel/FlyToObjectButton")
+tooltip_label = NodePath("Camera3D/HUD/Tooltip")
+move_panel = NodePath("Camera3D/HUD/MovePanel")
+rotate_panel = NodePath("Camera3D/HUD/RotatePanel")
+xr_origin = NodePath("XROrigin3D")
+xr_camera = NodePath("XROrigin3D/XRCamera3D")
+left_controller = NodePath("XROrigin3D/LeftController")
+right_controller = NodePath("XROrigin3D/RightController")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=206580299]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 25)
+near = 0.001
+far = 10000.0
+
+[node name="HUD" type="Control" parent="Camera3D" unique_id=1676393964]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_scifi")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Camera3D/HUD" unique_id=1540616461]
+layout_mode = 0
+offset_right = 600.0
+offset_bottom = 28.0
+
+[node name="SeedLabel" type="Label" parent="Camera3D/HUD/HBoxContainer" unique_id=456239568]
+layout_mode = 2
+text = "Seed:"
+
+[node name="SeedInput" type="LineEdit" parent="Camera3D/HUD/HBoxContainer" unique_id=1502754072]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "0"
+placeholder_text = "Galaxy seed"
+
+[node name="Button" type="Button" parent="Camera3D/HUD/HBoxContainer" unique_id=838466846]
+layout_mode = 2
+text = "Generate"
+
+[node name="CheckBox" type="CheckBox" parent="Camera3D/HUD/HBoxContainer" unique_id=2092434011]
+layout_mode = 2
+flat = true
+
+[node name="Label" type="Label" parent="Camera3D/HUD/HBoxContainer" unique_id=273178270]
+layout_mode = 2
+text = "Use HTTP API"
+
+[node name="TextEdit" type="TextEdit" parent="Camera3D/HUD/HBoxContainer" unique_id=774073641]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "http://localhost:8086"
+
+[node name="Panel" type="Panel" parent="Camera3D/HUD" unique_id=773619876]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -107.0
+offset_right = 121.0
+grow_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Camera3D/HUD/Panel" unique_id=1987034982]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 6.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Camera3D/HUD/Panel/VBoxContainer" unique_id=818798510]
+layout_mode = 2
+theme_override_constants/separation = 22
+
+[node name="Label" type="Label" parent="Camera3D/HUD/Panel/VBoxContainer/HBoxContainer" unique_id=481561386]
+layout_mode = 2
+text = "Position"
+
+[node name="GotoButton" type="Button" parent="Camera3D/HUD/Panel/VBoxContainer/HBoxContainer" unique_id=353263281]
+layout_mode = 2
+text = "Goto"
+
+[node name="XPosition" type="Label" parent="Camera3D/HUD/Panel/VBoxContainer" unique_id=811894267]
+layout_mode = 2
+text = "X"
+
+[node name="XInput" type="LineEdit" parent="Camera3D/HUD/Panel/VBoxContainer" unique_id=830600243]
+visible = false
+layout_mode = 2
+placeholder_text = "X (ly)"
+
+[node name="YPosition" type="Label" parent="Camera3D/HUD/Panel/VBoxContainer" unique_id=1559298835]
+layout_mode = 2
+text = "Y"
+
+[node name="YInput" type="LineEdit" parent="Camera3D/HUD/Panel/VBoxContainer" unique_id=879356545]
+visible = false
+layout_mode = 2
+placeholder_text = "Y (ly)"
+
+[node name="ZPosition" type="Label" parent="Camera3D/HUD/Panel/VBoxContainer" unique_id=121665907]
+layout_mode = 2
+text = "Z"
+
+[node name="ZInput" type="LineEdit" parent="Camera3D/HUD/Panel/VBoxContainer" unique_id=470445287]
+visible = false
+layout_mode = 2
+placeholder_text = "Z (ly)"
+
+[node name="Panel2" type="Panel" parent="Camera3D/HUD" unique_id=1314981310]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -350.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Camera3D/HUD/Panel2" unique_id=190654755]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = -45.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="Camera3D/HUD/Panel2/VBoxContainer" unique_id=54641920]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "✦ Selected Star"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Camera3D/HUD/Panel2/VBoxContainer" unique_id=838779612]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="StarInfo" type="RichTextLabel" parent="Camera3D/HUD/Panel2/VBoxContainer/ScrollContainer" unique_id=377803753]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "Click a star to select"
+fit_content = true
+scroll_active = false
+
+[node name="Button" type="Button" parent="Camera3D/HUD/Panel2" unique_id=927810605]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = -35.0
+offset_right = -5.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Fly To System"
+
+[node name="HBoxContainer2" type="VBoxContainer" parent="Camera3D/HUD" unique_id=681813643]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -215.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="CheckButton" type="CheckButton" parent="Camera3D/HUD/HBoxContainer2" unique_id=937508526]
+layout_mode = 2
+text = "Flight Mode (Galactic)"
+
+[node name="HSlider" type="HSlider" parent="Camera3D/HUD/HBoxContainer2" unique_id=2027598968]
+layout_mode = 2
+
+[node name="VelocityLabel" type="Label" parent="Camera3D/HUD/HBoxContainer2" unique_id=1636982701]
+layout_mode = 2
+text = "Velocity: 1ly/s"
+
+[node name="FPSLabel" type="Label" parent="Camera3D/HUD" unique_id=472619984]
+layout_mode = 0
+offset_left = 824.0
+offset_top = 2.0
+offset_right = 932.0
+offset_bottom = 25.0
+text = "FPS: 0"
+
+[node name="ViewModeLabel" type="Label" parent="Camera3D/HUD" unique_id=1844429494]
+layout_mode = 0
+offset_left = 654.0
+offset_top = 1.0
+offset_right = 794.0
+offset_bottom = 24.0
+text = "Galaxy View"
+
+[node name="NearestStarsPanel" type="Panel" parent="Camera3D/HUD" unique_id=1797882492]
+layout_mode = 1
+offset_left = 4.0
+offset_top = 33.0
+offset_right = 184.0
+offset_bottom = 331.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Camera3D/HUD/NearestStarsPanel" unique_id=1393372236]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="Camera3D/HUD/NearestStarsPanel/VBoxContainer" unique_id=996707452]
+layout_mode = 2
+text = "Nearest Stars"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Camera3D/HUD/NearestStarsPanel/VBoxContainer" unique_id=871275697]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="StarList" type="VBoxContainer" parent="Camera3D/HUD/NearestStarsPanel/VBoxContainer/ScrollContainer" unique_id=432764350]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SystemObjectsPanel" type="Panel" parent="Camera3D/HUD" unique_id=284266069]
+visible = false
+layout_mode = 1
+offset_left = 5.0
+offset_top = 33.0
+offset_right = 209.0
+offset_bottom = 330.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Camera3D/HUD/SystemObjectsPanel" unique_id=341721638]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="Camera3D/HUD/SystemObjectsPanel/VBoxContainer" unique_id=1550190406]
+layout_mode = 2
+text = "System Objects"
+
+[node name="ObjectList" type="Tree" parent="Camera3D/HUD/SystemObjectsPanel/VBoxContainer" unique_id=2017079673]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+hide_root = true
+
+[node name="SelectedObjectPanel" type="Panel" parent="Camera3D/HUD" unique_id=60087436]
+visible = false
+layout_mode = 1
+offset_left = 4.0
+offset_top = 332.0
+offset_right = 209.0
+offset_bottom = 497.0
+
+[node name="SelectedObjectInfo" type="Label" parent="Camera3D/HUD/SelectedObjectPanel" unique_id=619698844]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = 125.0
+grow_horizontal = 2
+text = "Select an object"
+autowrap_mode = 2
+
+[node name="FlyToObjectButton" type="Button" parent="Camera3D/HUD/SelectedObjectPanel" unique_id=2108300098]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = -35.0
+offset_right = -5.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Fly to Object"
+
+[node name="Tooltip" type="Label" parent="Camera3D/HUD" unique_id=1318268570]
+visible = false
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 25.0
+text = "Tooltip"
+
+[node name="MovePanel" type="Panel" parent="Camera3D/HUD" unique_id=1066603636]
+visible = false
+layout_mode = 0
+offset_left = 258.0
+offset_top = 507.0
+offset_right = 298.0
+offset_bottom = 547.0
+
+[node name="RotatePanel" type="Panel" parent="Camera3D/HUD" unique_id=747514554]
+visible = false
+layout_mode = 0
+offset_left = 747.0
+offset_top = 506.0
+offset_right = 787.0
+offset_bottom = 546.0
+
+[node name="System" parent="." unique_id=2053882772 instance=ExtResource("2_h2yge")]
+visible = false
+
+[node name="Galaxy" parent="." unique_id=4850069 instance=ExtResource("3_1bvp3")]
+visible = false
+
+[node name="XROrigin3D" type="XROrigin3D" parent="." unique_id=1847293651]
+visible = false
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D" unique_id=1847293652]
+near = 0.001
+far = 10000.0
+
+[node name="LeftController" type="XRController3D" parent="XROrigin3D" unique_id=1847293653]
+tracker = &"left_hand"
+
+[node name="ControllerMesh" type="MeshInstance3D" parent="XROrigin3D/LeftController" unique_id=1062145282]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.05)
+mesh = SubResource("ControllerMesh")
+surface_material_override/0 = SubResource("ControllerMaterial")
+
+[node name="HelpLabel" type="Label3D" parent="XROrigin3D/LeftController" unique_id=1106709719]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.06, -0.02)
+pixel_size = 0.001
+modulate = Color(0.8, 0.9, 1, 1)
+text = "Movement:
+  Stick = Move
+  Grip = Speed Boost
+  Y = Back to Galaxy"
+outline_size = 8
+
+[node name="RightController" type="XRController3D" parent="XROrigin3D" unique_id=1847293654]
+tracker = &"right_hand"
+
+[node name="ControllerMesh" type="MeshInstance3D" parent="XROrigin3D/RightController" unique_id=1891501641]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.05)
+mesh = SubResource("ControllerMesh")
+surface_material_override/0 = SubResource("ControllerMaterial")
+
+[node name="HelpLabel" type="Label3D" parent="XROrigin3D/RightController" unique_id=33386314]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.06, -0.02)
+pixel_size = 0.001
+modulate = Color(0.8, 0.9, 1, 1)
+text = "Selection:
+  Trigger = Select Star
+  A = Fly to System
+  Stick = Turn"
+outline_size = 8
+
+[node name="LaserPointer" type="MeshInstance3D" parent="XROrigin3D/RightController" unique_id=1567458217]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, -500)
+mesh = SubResource("LaserMesh")
+surface_material_override/0 = SubResource("LaserMaterial")
+
+[node name="LaserDot" type="MeshInstance3D" parent="XROrigin3D/RightController" unique_id=1789177419]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+mesh = SubResource("LaserDotMesh")
+surface_material_override/0 = SubResource("LaserDotMaterial")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1281328462]
+environment = SubResource("Environment_lquwl")
+
+[connection signal="pressed" from="Camera3D/HUD/HBoxContainer/Button" to="." method="_on_generate_button_pressed"]
+[connection signal="pressed" from="Camera3D/HUD/Panel/VBoxContainer/HBoxContainer/GotoButton" to="." method="_on_goto_button_pressed"]
+[connection signal="pressed" from="Camera3D/HUD/Panel2/Button" to="." method="_on_fly_to_system_button_pressed"]
+[connection signal="toggled" from="Camera3D/HUD/HBoxContainer2/CheckButton" to="." method="_on_flight_mode_toggled"]

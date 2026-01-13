@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://copuk78py4tdv"]
+
+[ext_resource type="Script" uid="uid://ppc5tsw5d0ew" path="res://objects/system_moon.gd" id="1_script"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_1"]
+radial_segments = 16
+rings = 8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1"]
+albedo_color = Color(0.6, 0.6, 0.6, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_gewg5"]
+
+[node name="SystemMoon" type="Node3D" unique_id=1119699704]
+script = ExtResource("1_script")
+
+[node name="Mesh" type="MeshInstance3D" parent="." unique_id=294082314]
+mesh = SubResource("SphereMesh_1")
+surface_material_override/0 = SubResource("StandardMaterial3D_1")
+
+[node name="CollisionBody" type="StaticBody3D" parent="." unique_id=353333707]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape" type="CollisionShape3D" parent="CollisionBody" unique_id=291087472]
+shape = SubResource("SphereShape3D_gewg5")

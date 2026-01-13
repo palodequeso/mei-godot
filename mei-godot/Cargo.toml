@@ -1,0 +1,19 @@
+[package]
+name = "mei-godot"
+version = "0.0.1"
+edition = "2021"
+authors = ["PaloDeQueso"]
+license = "MIT"
+description = "Godot 4 GDExtension bindings for MEI procedural galaxy generation"
+repository = "https://github.com/palodequeso/mei-godot"
+keywords = ["godot", "gdextension", "procedural", "galaxy", "space"]
+categories = ["game-development", "graphics"]
+readme = "../README.md"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+godot = "0.2"
+# mei = { git = "ssh://git@github.com/palodequeso/mei", package = "matter-energy-information", default-features = false }
+mei = { path = "../../mei", package = "matter-energy-information", default-features = false }

@@ -1,0 +1,22 @@
+# Rust
+target/
+Cargo.lock
+
+# Local cargo config (contains machine-specific paths)
+.cargo/config.toml
+
+# Godot
+.godot/
+builds/
+android/
+*.import
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
