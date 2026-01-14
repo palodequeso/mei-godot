@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bjs3wtbtvt7s7"]
 
-[ext_resource type="Script" uid="uid://dlhf7bpgpv2b" path="res://objects/system_star.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://dlhf7bpgpv2b" path="res://src/objects/system_star.gd" id="1_script"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_1"]
 radial_segments = 32

@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-MeiUtils="*res://mei_utils.gd"
+MeiUtils="*res://src/mei_utils.gd"
 
 [display]
 

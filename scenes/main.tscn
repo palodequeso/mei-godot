@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://j8eofh07h1qj"]
 
-[ext_resource type="Script" uid="uid://dyvfckmgot73j" path="res://main.gd" id="1_ig7tw"]
-[ext_resource type="PackedScene" uid="uid://tqnqjfo0j54e" path="res://system.tscn" id="2_h2yge"]
-[ext_resource type="PackedScene" uid="uid://c8abl8sc7neu" path="res://galaxy.tscn" id="3_1bvp3"]
-[ext_resource type="Theme" uid="uid://ctgip6y7tcrsf" path="res://scifi_theme.tres" id="4_scifi"]
+[ext_resource type="Script" uid="uid://dyvfckmgot73j" path="res://src/main.gd" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://tqnqjfo0j54e" path="res://scenes/system.tscn" id="2_h2yge"]
+[ext_resource type="PackedScene" uid="uid://c8abl8sc7neu" path="res://scenes/galaxy.tscn" id="3_1bvp3"]
+[ext_resource type="Theme" uid="uid://ctgip6y7tcrsf" path="res://resources/scifi_theme.tres" id="4_scifi"]
 
 [sub_resource type="BoxMesh" id="ControllerMesh"]
 size = Vector3(0.05, 0.03, 0.12)

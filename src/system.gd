@@ -4,14 +4,14 @@ signal exit_system_requested
 signal object_selected(object_node: Node3D)
 
 # Scene templates for instancing
-var StarScene = preload("res://objects/system_star.tscn")
-var PlanetScene = preload("res://objects/system_planet.tscn")
-var MoonScene = preload("res://objects/system_moon.tscn")
-var SelectionMarkerScene = preload("res://objects/selection_marker.tscn")
+var StarScene = preload("res://scenes/objects/system_star.tscn")
+var PlanetScene = preload("res://scenes/objects/system_planet.tscn")
+var MoonScene = preload("res://scenes/objects/system_moon.tscn")
+var SelectionMarkerScene = preload("res://scenes/objects/selection_marker.tscn")
 
 # Material resources for orbit lines
-var OrbitMaterial = preload("res://objects/orbit_material.tres")
-var BeltOrbitMaterial = preload("res://objects/belt_orbit_material.tres")
+var OrbitMaterial = preload("res://resources/materials/orbit_material.tres")
+var BeltOrbitMaterial = preload("res://resources/materials/belt_orbit_material.tres")
 
 @export var distant_stars: MultiMeshInstance3D  # Nearby galaxy stars still use multimesh (thousands)
 @export var asteroid_belt_viz: MultiMeshInstance3D  # Asteroid belt particles still use multimesh

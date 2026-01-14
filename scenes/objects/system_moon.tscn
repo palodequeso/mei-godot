@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://copuk78py4tdv"]
 
-[ext_resource type="Script" uid="uid://ppc5tsw5d0ew" path="res://objects/system_moon.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://ppc5tsw5d0ew" path="res://src/objects/system_moon.gd" id="1_script"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_1"]
 radial_segments = 16

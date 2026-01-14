@@ -1,8 +1,8 @@
 extends Node3D
 
 # Scene templates
-var SelectionMarkerScene = preload("res://objects/selection_marker.tscn")
-var CrosshairScene = preload("res://objects/crosshair.tscn")
+var SelectionMarkerScene = preload("res://scenes/objects/selection_marker.tscn")
+var CrosshairScene = preload("res://scenes/objects/crosshair.tscn")
 
 # Sub-scene references
 @export var galaxy_scene: Node3D

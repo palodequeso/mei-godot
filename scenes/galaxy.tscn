@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c8abl8sc7neu"]
 
-[ext_resource type="Script" uid="uid://lqldomo8axcm" path="res://galaxy.gd" id="1_i8bsd"]
+[ext_resource type="Script" uid="uid://lqldomo8axcm" path="res://src/galaxy.gd" id="1_i8bsd"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i8bsd"]
 emission_enabled = true
