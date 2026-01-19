@@ -254,7 +254,7 @@ impl MeiGalaxy {
 
         let position = Vec3::new(x, y, z);
         let clamped_radius = radius.min(api.generator.config.nearby_max_radius);
-        let stars = api.generator.get_nearby_stars(&position, radius, max_stars as usize);
+        let stars = api.generator.get_nearby_stars(&position, clamped_radius, max_stars as usize);
         let count = stars.len();
         
         let mut positions = PackedVector3Array::new();
