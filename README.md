@@ -2,7 +2,17 @@
 
 A **Godot 4 GDExtension plugin** for procedural galaxy generation using the [MEI (Matter, Energy, Information)](https://github.com/palodequeso/mei) core library. Explore entire galaxies in VR or desktop mode.
 
+
+![assets/screenshot0.png](assets/screenshot0.png)
+![assets/screenshot1.png](assets/screenshot1.png)
+![assets/screenshot2.png](assets/screenshot2.png)
+![assets/screenshot3.png](assets/screenshot3.png)
+
 ### Warning: This is a pre-alpha project and does not claim any sort of scientific accuracy.. but could hopefully be used as a simulation starting point some day.
+
+### AI Disclosure
+
+I used several LLM models to help me generate parts of this project. I toiled with the idea of releasing an open source library in which I used an LLM to assist, but in the end, I felt that giving back via open source is a sound way to make sure that the usage is perhaps more ethical, as the models were trained on our collective history.
 
 ## What is MEI?
 
@@ -24,8 +34,6 @@ This plugin provides:
 
 ### Viewer Features
 
-- **VR Support**: Full OpenXR integration for PCVR (Mobile should work with minor tweaks)
-    - Barely working, needs lots of work on UI/Input, can fly around though with PCVR.
 - **Desktop Support**: Full desktop support for Windows, Linux, and macOS (not built yet)
 - **Mobile Support**: Full mobile support for Android and iOS (not built yet)
 - **Dual view modes**:
@@ -35,14 +43,13 @@ This plugin provides:
   - MultiMesh point clouds (galactic structure + nearby stars)
   - Screen-space picking with hash grid
   - Dynamic nearby star querying
-  - Rotatable galaxy with spiral arms visible
 - **System rendering**:
   - Orbital mechanics
-  - Planet textures (procedurally assigned)
+  - Planet textures (procedurally assigned, but innacurate)
   - Moon systems with orbital paths
   - Asteroid belts
   - Background stars (queried nearby systems that we should make clickable)
-  - Selection wireframes
+  - Selection wireframe
 - **UI panels**:
   - Seed input and random generation
   - Goto position
@@ -50,8 +57,8 @@ This plugin provides:
   - System objects list (clickable)
   - Selected star/planet details
   - Flight controls
-- **VR 3D menu**: World-space UI panels in VR mode needs to be implemented
-
+- **VR Support**: Full OpenXR integration for PCVR (Mobile should work with minor tweaks)
+    - Barely working, needs lots of work on UI/Input, can fly around though with PCVR.
 
 ## Project Structure
 
@@ -163,13 +170,13 @@ Seed 0 generates a Milky Way clone with parameters based on current astronomical
 ### Performance
 
 - **Nearby star queries can be slow**: 32 ly radius queries check ~4 million cells - debouncing helps
-- **Galactic structure generation not cached**: Changing seeds regenerates 500k stars (1-2 seconds)
+- **Galactic structure generation not cached**: Changing seeds regenerates 500k stars
 - **No LOD system**: All stars render as same-size points regardless of distance
 
 ### Not Implemented Yet
 
 - **No persistence**: Can't save/load selected galaxies or favorite systems
-- **Limited star types**: Only basic main sequence (O, B, A, F, G, K, M) - no exotic objects
+- **Limited star types**: Only basic main sequence (O, B, A, F, G, K, M) - exotic types are just simple balls still
 - **No atmospheric effects**: Planets have no clouds, weather, or day/night cycles
 
 ## Cross-Platform Extension Builds

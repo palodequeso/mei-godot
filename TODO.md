@@ -16,6 +16,9 @@
 - [ ] Orbital motion - planets actually move over time
 - [ ] Better asteroid belt rendering (individual asteroids at close range)
 - [ ] LOD system for stars (larger points when closer)
+- [ ] Planet atmospheres
+- [ ] Planet weather
+- [ ] Planet day/night cycles
 
 ### UI/UX
 - [ ] Bookmark/favorite system for stars and positions
@@ -43,22 +46,9 @@
 - [ ] Save/load favorite galaxies
 - [ ] Custom galaxy parameters UI
 
----
-
 ## Technical Debt
 
 - [ ] Clean up GDScript warnings
 - [ ] Better error handling in GDExtension bindings
 - [ ] Unit tests for GDScript logic
 - [ ] Document GDExtension API for other Godot developers
-
----
-
-## Upstream (MEI Core Library)
-
-These features require changes to the [MEI core library](https://github.com/palodequeso/mei):
-
-- [ ] More star types (neutron stars, black holes, white dwarfs)
-- [ ] Habitability calculations
-- [ ] Binary star orbital mechanics
-- [ ] GAIA data integration for real star positions
