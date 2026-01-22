@@ -13,7 +13,8 @@ config_version=5
 config/name="godot-mei-viewer"
 run/main_scene="uid://j8eofh07h1qj"
 config/features=PackedStringArray("4.6", "Forward Plus")
-config/icon="res://icon.svg"
+boot_splash/image="uid://ocekt88gc8q0"
+config/icon="res://icon.png"
 
 [autoload]
 

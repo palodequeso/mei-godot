@@ -1,0 +1,252 @@
+name: Build and Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version tag (e.g., v1.0.0)'
+        required: true
+        default: 'v0.0.1'
+      create_release:
+        description: 'Create GitHub release'
+        type: boolean
+        default: true
+
+env:
+  GODOT_VERSION: "4.6"
+  GODOT_RELEASE: "rc2"
+  EXPORT_NAME: godot-mei-viewer
+
+jobs:
+  # Build Rust GDExtension for all platforms
+  build-rust:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Linux
+            os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            artifact_path: target/release/libmei_godot.so
+            artifact_name: libmei_godot.so
+          - name: Windows
+            os: ubuntu-latest
+            target: x86_64-pc-windows-gnu
+            artifact_path: target/x86_64-pc-windows-gnu/release/mei_godot.dll
+            artifact_name: mei_godot.dll
+
+    runs-on: ${{ matrix.os }}
+    name: Build Rust (${{ matrix.name }})
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-action@stable
+
+      - name: Add target
+        run: rustup target add ${{ matrix.target }}
+
+      - name: Install cross-compilation dependencies (Windows)
+        if: matrix.target == 'x86_64-pc-windows-gnu'
+        run: sudo apt-get update && sudo apt-get install -y mingw-w64
+
+      - name: Build release
+        run: |
+          if [ "${{ matrix.target }}" = "x86_64-unknown-linux-gnu" ]; then
+            cargo build --release
+          else
+            cargo build --release --target ${{ matrix.target }}
+          fi
+        working-directory: mei-godot
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: rust-${{ matrix.name }}
+          path: mei-godot/${{ matrix.artifact_path }}
+          retention-days: 1
+
+  # Export Godot project for each platform
+  export-godot:
+    needs: build-rust
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Linux
+            preset: Linux
+            extension: x86_64
+          - name: Windows
+            preset: Windows Desktop
+            extension: exe
+
+    runs-on: ubuntu-latest
+    name: Export Godot (${{ matrix.name }})
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Download and setup Godot
+        run: |
+          wget -q https://github.com/godotengine/godot-builds/releases/download/${{ env.GODOT_VERSION }}-${{ env.GODOT_RELEASE }}/Godot_v${{ env.GODOT_VERSION }}-${{ env.GODOT_RELEASE }}_linux.x86_64.zip
+          wget -q https://github.com/godotengine/godot-builds/releases/download/${{ env.GODOT_VERSION }}-${{ env.GODOT_RELEASE }}/Godot_v${{ env.GODOT_VERSION }}-${{ env.GODOT_RELEASE }}_export_templates.tpz
+          
+          unzip -q Godot_v${{ env.GODOT_VERSION }}-${{ env.GODOT_RELEASE }}_linux.x86_64.zip
+          sudo mv Godot_v${{ env.GODOT_VERSION }}-${{ env.GODOT_RELEASE }}_linux.x86_64 /usr/local/bin/godot
+          sudo chmod +x /usr/local/bin/godot
+          
+          mkdir -p ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION }}.${{ env.GODOT_RELEASE }}
+          unzip -q Godot_v${{ env.GODOT_VERSION }}-${{ env.GODOT_RELEASE }}_export_templates.tpz
+          mv templates/* ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION }}.${{ env.GODOT_RELEASE }}/
+
+      - name: Download Linux Rust artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: rust-Linux
+          path: target/release/
+
+      - name: Download Windows Rust artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: rust-Windows
+          path: target/x86_64-pc-windows-gnu/release/
+
+      - name: Setup export directories
+        run: mkdir -p builds/linux builds/windows
+
+      - name: Export ${{ matrix.name }}
+        run: |
+          EXPORT_DIR=$(echo "${{ matrix.name }}" | tr '[:upper:]' '[:lower:]')
+          /usr/local/bin/godot --headless --export-release "${{ matrix.preset }}" builds/${EXPORT_DIR}/${{ env.EXPORT_NAME }}.${{ matrix.extension }}
+
+      - name: Upload export artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: export-${{ matrix.name }}
+          path: builds/
+          retention-days: 7
+
+  # Create AppImage for Linux
+  build-appimage:
+    needs: export-godot
+    runs-on: ubuntu-latest
+    name: Build AppImage
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Linux export
+        uses: actions/download-artifact@v4
+        with:
+          name: export-Linux
+          path: builds/
+
+      - name: Create AppDir structure
+        run: |
+          mkdir -p AppDir/usr/bin
+          mkdir -p AppDir/usr/share/applications
+          mkdir -p AppDir/usr/share/icons/hicolor/256x256/apps
+          
+          # Copy executable and pck
+          cp builds/linux/${{ env.EXPORT_NAME }}.x86_64 AppDir/usr/bin/${{ env.EXPORT_NAME }}
+          chmod +x AppDir/usr/bin/${{ env.EXPORT_NAME }}
+          
+          # Copy pck file if it exists separately
+          if [ -f builds/linux/${{ env.EXPORT_NAME }}.pck ]; then
+            cp builds/linux/${{ env.EXPORT_NAME }}.pck AppDir/usr/bin/
+          fi
+          
+          # Copy GDExtension library (Godot exports it to builds/linux/)
+          cp builds/linux/libmei_godot.so AppDir/usr/bin/
+          cp mei.gdextension AppDir/usr/bin/
+          
+          # Copy icon
+          cp icon.png AppDir/usr/share/icons/hicolor/256x256/apps/${{ env.EXPORT_NAME }}.png
+          cp icon.png AppDir/${{ env.EXPORT_NAME }}.png
+
+      - name: Create desktop file
+        run: |
+          cat > AppDir/${{ env.EXPORT_NAME }}.desktop << EOF
+          [Desktop Entry]
+          Name=MEI Galaxy Viewer
+          Exec=${{ env.EXPORT_NAME }}
+          Icon=${{ env.EXPORT_NAME }}
+          Type=Application
+          Categories=Game;Simulation;
+          Comment=Procedural galaxy viewer powered by MEI
+          EOF
+          
+          cp AppDir/${{ env.EXPORT_NAME }}.desktop AppDir/usr/share/applications/
+
+      - name: Create AppRun
+        run: |
+          cat > AppDir/AppRun << 'EOF'
+          #!/bin/bash
+          SELF=$(readlink -f "$0")
+          HERE=${SELF%/*}
+          export PATH="${HERE}/usr/bin:${PATH}"
+          cd "${HERE}/usr/bin"
+          exec "./godot-mei-viewer" --xr-mode off "$@"
+          EOF
+          chmod +x AppDir/AppRun
+
+      - name: Download appimagetool
+        run: |
+          wget -q https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
+          chmod +x appimagetool-x86_64.AppImage
+
+      - name: Build AppImage
+        run: |
+          ARCH=x86_64 ./appimagetool-x86_64.AppImage --appimage-extract-and-run AppDir ${{ env.EXPORT_NAME }}-${{ github.event.inputs.version }}-x86_64.AppImage
+
+      - name: Upload AppImage
+        uses: actions/upload-artifact@v4
+        with:
+          name: AppImage
+          path: ${{ env.EXPORT_NAME }}-*.AppImage
+          retention-days: 7
+
+  # Create GitHub Release
+  create-release:
+    if: ${{ github.event.inputs.create_release == 'true' }}
+    needs: [export-godot, build-appimage]
+    runs-on: ubuntu-latest
+    name: Create Release
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts/
+
+      - name: Prepare release assets
+        run: |
+          mkdir -p release
+          
+          # Linux AppImage
+          cp artifacts/AppImage/*.AppImage release/
+          
+          # Windows zip
+          cd artifacts/export-Windows/windows
+          zip -r ../../../release/${{ env.EXPORT_NAME }}-${{ github.event.inputs.version }}-windows.zip .
+          cd ../../..
+          
+          # Linux tarball (non-AppImage)
+          cd artifacts/export-Linux/linux
+          tar -czvf ../../../release/${{ env.EXPORT_NAME }}-${{ github.event.inputs.version }}-linux.tar.gz .
+          cd ../../..
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.event.inputs.version }}
+          name: Release ${{ github.event.inputs.version }}
+          draft: true
+          files: release/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

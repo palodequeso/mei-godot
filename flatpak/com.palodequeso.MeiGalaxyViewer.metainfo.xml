@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.palodequeso.MeiGalaxyViewer</id>
+  <name>MEI Galaxy Viewer</name>
+  <summary>Procedural galaxy viewer powered by MEI (matter-energy-information)</summary>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MIT</project_license>
+  
+  <description>
+    <p>
+      MEI Galaxy Viewer is an interactive procedural galaxy exploration tool.
+      Navigate through billions of procedurally generated star systems, each with
+      unique stars, planets, moons, and asteroid belts.
+    </p>
+    <p>Features:</p>
+    <ul>
+      <li>Procedurally generated galaxy with psuedo-realistic stellar distributions</li>
+      <li>Detailed star systems with planets, moons, and asteroid belts</li>
+      <li>Real-time 3D visualization</li>
+      <li>Deterministic generation from seed values</li>
+    </ul>
+  </description>
+  
+  <launchable type="desktop-id">com.palodequeso.MeiGalaxyViewer.desktop</launchable>
+  
+  <url type="homepage">https://github.com/palodequeso/mei-godot</url>
+  <url type="bugtracker">https://github.com/palodequeso/mei-godot/issues</url>
+  
+  <provides>
+    <binary>godot-mei-viewer</binary>
+  </provides>
+  
+  <content_rating type="oars-1.1" />
+  
+  <releases>
+    <release version="0.1.0" date="2026-01-20">
+      <description>
+        <p>Initial release</p>
+      </description>
+    </release>
+  </releases>
+</component>

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=MEI Galaxy Viewer
+Comment=Procedural galaxy viewer powered by MEI (matter-energy-information)
+Exec=godot-mei-viewer --xr-mode off
+Icon=com.palodequeso.MeiGalaxyViewer
+Type=Application
+Categories=Game;Simulation;Science;
+Keywords=space;galaxy;stars;procedural;astronomy;
