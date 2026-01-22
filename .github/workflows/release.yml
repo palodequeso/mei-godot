@@ -28,11 +28,13 @@ jobs:
             os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
             artifact_path: target/release/libmei_godot.so
+            build_dir: .
             artifact_name: libmei_godot.so
           - name: Windows
             os: ubuntu-latest
             target: x86_64-pc-windows-gnu
             artifact_path: target/x86_64-pc-windows-gnu/release/mei_godot.dll
+            build_dir: .
             artifact_name: mei_godot.dll
 
     runs-on: ${{ matrix.os }}
@@ -60,13 +62,13 @@ jobs:
           else
             cargo build --release --target ${{ matrix.target }}
           fi
-        working-directory: mei-godot
+        working-directory: ${{ matrix.build_dir }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: rust-${{ matrix.name }}
-          path: mei-godot/${{ matrix.artifact_path }}
+          path: ${{ matrix.artifact_path }}
           retention-days: 1
 
   # Export Godot project for each platform
