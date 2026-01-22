@@ -15,6 +15,6 @@ crate-type = ["cdylib"]
 
 [dependencies]
 godot = "0.2"
-mei = { git = "ssh://git@github.com/palodequeso/mei", package = "matter-energy-information", default-features = false }
+mei = { git = "https://github.com/palodequeso/mei", package = "matter-energy-information", default-features = false }
 # tinkering with the mei build locally? use this instead:
 # mei = { path = "../../mei", package = "matter-energy-information", default-features = false }
