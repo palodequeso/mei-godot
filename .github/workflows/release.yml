@@ -12,6 +12,9 @@ on:
         type: boolean
         default: true
 
+permissions:
+  contents: write
+
 env:
   GODOT_VERSION: "4.6"
   GODOT_RELEASE: "rc2"
